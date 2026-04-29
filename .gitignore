@@ -20,3 +20,6 @@ outputs/_run_log.txt
 
 # Notebook execution copies
 *.executed.ipynb
+
+# Large data files (not needed on HF Spaces, app uses cached results)
+data/patient_vitals.csv
