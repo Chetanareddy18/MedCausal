@@ -1,0 +1,22 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+
+# --- Virtualenvs (kept outside this folder anyway) ---
+causal_env/
+venv/
+.venv/
+
+# --- OS / editor ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# --- Local-only artifacts (NOT committed) ---
+outputs/_run_log.txt
+
+# Notebook execution copies
+*.executed.ipynb
