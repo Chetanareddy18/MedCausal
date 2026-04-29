@@ -1,16 +1,3 @@
----
-title: MedCausal
-emoji: 🫀
-colorFrom: blue
-colorTo: indigo
-sdk: streamlit
-sdk_version: 1.37.0
-app_file: app.py
-pinned: false
-license: mit
-short_description: ICU Vitals Causal — per-patient treatment effect dashboard with explainability
----
-
 <div align="center">
 
 # 🫀 MedCausal
