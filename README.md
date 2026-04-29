@@ -245,17 +245,7 @@ python 14_shap_explain.py              # Generate SHAP plots
 - ✅ **Production readiness** — cached results + Streamlit dashboard on HF Spaces
 - ✅ **Reproducibility** — Kaggle notebook + plain GitHub repo
 
----
 
-## 🤝 Contributing
-
-Ideas for extensions:
-- Add Bayesian causal forests
-- Implement instrumental variables
-- Multi-outcome simultaneous inference
-- Integration with clinical trial simulators
-
----
 
 ## 📄 License
 
