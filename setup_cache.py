@@ -24,36 +24,55 @@ def ensure_cache(cache_dir: str = "outputs") -> bool:
         # Create outputs directory if it doesn't exist
         cache_path.mkdir(parents=True, exist_ok=True)
         
-        # Use GitHub releases as download source
-        CACHE_ZIP_URL = "https://github.com/Chetanareddy18/MedCausal/releases/download/v1.0-outputs/outputs.zip"
+        # Try multiple sources for robustness
+        urls = [
+            "https://github.com/Chetanareddy18/MedCausal/releases/download/v1.0-outputs/outputs.zip",
+            "https://huggingface.co/spaces/ChetanaReddy18/MedCausal/resolve/main/outputs.zip",
+        ]
+        
         ZIP_FILE = cache_path / "outputs_temp.zip"
+        success = False
         
-        # Download with progress
-        def download_progress(block_num, block_size, total_size):
-            downloaded = block_num * block_size
-            if total_size > 0:
-                percent = min(100, (downloaded / total_size) * 100)
-                print(f"  📥 {percent:.0f}%", end="\r")
+        for url_idx, url in enumerate(urls, 1):
+            try:
+                print(f"  📥 Attempting download ({url_idx}/{len(urls)})...")
+                urllib.request.urlretrieve(url, str(ZIP_FILE), _download_progress)
+                print(f"\n  ✅ Downloaded!")
+                success = True
+                break
+            except Exception as e:
+                print(f"\n  ⚠️  Failed: {type(e).__name__}")
+                if url_idx < len(urls):
+                    print(f"     Trying next source...")
         
-        print(f"  📥 Fetching from GitHub releases...")
-        urllib.request.urlretrieve(CACHE_ZIP_URL, str(ZIP_FILE), download_progress)
+        if not success:
+            raise Exception("All download sources exhausted")
         
         # Extract
-        print(f"\n  📦 Extracting...")
+        print(f"  📦 Extracting...")
         with zipfile.ZipFile(str(ZIP_FILE), 'r') as zf:
             zf.extractall(str(cache_path.parent))
         
         # Cleanup
-        ZIP_FILE.unlink()
-        print(f"✅ Cache downloaded successfully!")
+        ZIP_FILE.unlink(missing_ok=True)
+        print(f"✅ Cache ready!")
         return True
         
     except Exception as e:
-        print(f"❌ Failed to download cache: {type(e).__name__}: {e}")
-        print(f"⚠️  Dashboard may not work properly without cached outputs.")
-        print(f"   Try visiting: https://github.com/Chetanareddy18/MedCausal/releases")
+        print(f"❌ Cache download failed: {type(e).__name__}: {e}")
+        print(f"   ⚠️  Dashboard may not display properly without outputs.")
+        print(f"   📖 Please check: https://github.com/Chetanareddy18/MedCausal")
         return False
+
+
+def _download_progress(block_num, block_size, total_size):
+    """Show download progress."""
+    if total_size > 0:
+        downloaded = min(block_num * block_size, total_size)
+        percent = (downloaded / total_size) * 100
+        print(f"  📥 {percent:.0f}%", end="\r")
 
 
 if __name__ == "__main__":
     ensure_cache()
+
