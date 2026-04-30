@@ -15,6 +15,12 @@ Thumbs.db
 .vscode/
 .idea/
 
+# --- Large cached outputs (download at runtime for HF Spaces) ---
+outputs/
+outputs/_cache/
+outputs/tables/
+outputs/figures/
+
 # --- Local-only artifacts (NOT committed) ---
 outputs/_run_log.txt
 
