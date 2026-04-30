@@ -13,6 +13,10 @@ import plotly.graph_objects as go
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from config import ART, TABLE_DIR, FIG_DIR
+from setup_cache import ensure_cache
+
+# Ensure outputs cache is available (downloads on first load if needed)
+_ = ensure_cache()
 
 # =============================================================================
 #  PAGE CONFIG  +  GLOBAL STYLE
